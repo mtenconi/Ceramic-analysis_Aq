@@ -68,8 +68,8 @@ head(var$contrib[,1:4], 4)
 fviz_pca_biplot(pca, repel = TRUE,
                 col.var = "contrib", # Variables color
                 gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
-                col.ind = "#696969"  # Individuals color) + 
-                theme_minimal() + ggtitle("PCA - Biplot")
+                col.ind = "#696969",  # Individuals color
+) + theme_minimal() + ggtitle("PCA - Biplot")
 
 # PCA graph of individuals with most important (or, contributing) ones highlighted
 fviz_pca_ind(pca, col.ind = "contrib",
