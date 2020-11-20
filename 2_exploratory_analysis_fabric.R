@@ -2,29 +2,25 @@
 # Analysis of data grouped by fabrics(groups observed through petrographic analysis)
 
 ##############################################################################
-# Count Plot of vessel type
+# Count Plot by vessel type
 new_data %>% 
   ggplot(aes(y = vessel_type, fill = vessel_type))  + 
   geom_bar(size = 1) +
   theme(panel.background = element_rect(fill = "white",colour = "white"),
         axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"),
         legend.position = "none")
-group_by(new_data, vessel_type) %>%
-  count()
-group_by(new_data, vessel_type) %>% 
-  summarise(n_percento = round(n()*100/49))
+group_by(new_data, vessel_type) %>% count()
+group_by(new_data, vessel_type) %>% summarise(n_percento = round(n()*100/49))
 
 ##############################################################################
-# Count Plot of chronology
+# Count Plot by chronology
 new_data %>% 
   ggplot(aes(y = chronology, fill = chronology))  + 
   geom_bar(size = 1)+
   theme(panel.background = element_rect(fill = "white",colour = "white"),
         axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"))
-group_by(new_data, chronology) %>%
-  count()
-group_by(new_data, chronology) %>% 
-  summarise(n_percento = round(n()*100/49))
+group_by(new_data, chronology) %>% count()
+group_by(new_data, chronology) %>% summarise(n_percento = round(n()*100/49))
 
 ##############################################################################
 # Count Plot of fabrics
@@ -33,16 +29,13 @@ new_data %>%
   geom_bar(size = 1) +
   theme(panel.background = element_rect(fill = "white",colour = "white"),
         axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"))
-group_by(new_data, fabric) %>%
-  count()
-group_by(new_data, fabric) %>%
-  summarise(n_percento = round(n()*100/49))
+group_by(new_data, fabric) %>% count()
+group_by(new_data, fabric) %>% summarise(n_percento = round(n()*100/49))
 
 ##############################################################################
 # Fabric 1:
 # Summary of the data:
 filter(new_data, fabric == "1")[5:34] %>% summary() %>% kable(caption = "Fabric 1") %>% kable_styling()
-
 summary_major_fabric1 <- filter(new_data, fabric == "1") %>% 
   summarize(avg_SiO2 = round(mean(SiO2),2), sd_SiO2 = round(sd(SiO2),2), 
             avg_TiO2 = round(mean(TiO2),2), sd_TiO2 = round(sd(TiO2),2), 
@@ -62,7 +55,6 @@ summary_major_fabric1
 
 # Fabric 2:
 filter(new_data, fabric == "2")[5:34] %>% summary() %>% kable(caption = "Fabric 2") %>% kable_styling()
-
 summary_major_fabric2 <- filter(new_data, fabric == "2") %>% 
   summarize(avg_SiO2 = round(mean(SiO2),2), sd_SiO2 = round(sd(SiO2),2), 
             avg_TiO2 = round(mean(TiO2),2), sd_TiO2 = round(sd(TiO2),2), 
@@ -82,9 +74,7 @@ summary_major_fabric2
 
 # Fabric 3:
 # Summary of the data:
-filter(new_data, fabric == "3")[5:34] %>% summary() %>% 
-  kable(caption = "Fabric 3") %>% kable_styling()
-
+filter(new_data, fabric == "3")[5:34] %>% summary() %>% kable(caption = "Fabric 3") %>% kable_styling()
 summary_major_fabric3 <- filter(new_data, fabric == "3") %>% 
   summarize(avg_SiO2 = round(mean(SiO2),2), sd_SiO2 = round(sd(SiO2),2), 
             avg_TiO2 = round(mean(TiO2),2), sd_TiO2 = round(sd(TiO2),2), 
@@ -103,9 +93,7 @@ summary_major_fabric3 <- data.frame("Major elements (weight percent)" = c("SiO2"
 summary_major_fabric3
 
 # Fabric 4:
-filter(new_data, fabric == "4")[5:34] %>% summary() %>% 
-  kable(caption = "Fabric 4") %>% kable_styling()
-
+filter(new_data, fabric == "4")[5:34] %>% summary() %>% kable(caption = "Fabric 4") %>% kable_styling()
 summary_major_fabric4 <- filter(new_data, fabric == "4") %>% 
   summarize(avg_SiO2 = round(mean(SiO2),2), sd_SiO2 = round(sd(SiO2),2), 
             avg_TiO2 = round(mean(TiO2),2), sd_TiO2 = round(sd(TiO2),2), 
@@ -190,8 +178,7 @@ p <- seq(0.05, 0.95, 0.05)
 x1 <- filter(new_data, fabric == "1")$SiO2
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq1_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -202,8 +189,7 @@ qq1_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "2")$SiO2
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq1_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -214,8 +200,7 @@ qq1_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "3")$SiO2
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm(p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq1_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -226,8 +211,7 @@ qq1_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "4")$SiO2
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,"observed_quantiles" = observed_quantiles)
 qq1_4 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -235,12 +219,10 @@ qq1_4 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
   theme(panel.background = element_blank(),
         axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"))
 
-
 grid.arrange(qq1_1,qq1_2,qq1_3,qq1_4,ncol = 2, top = "SiO2")
 
 # shapiro - test
-# H0: normal distribution
-# p-value > 0.05: H0 accepted
+# H0: normal distribution: p-value > 0.05: H0 accepted
 shapiro.test(filter(new_data, fabric == "1")$SiO2)
 shapiro.test(filter(new_data, fabric == "2")$SiO2)
 shapiro.test(filter(new_data, fabric == "3")$SiO2)
@@ -314,8 +296,7 @@ p <- seq(0.05, 0.95, 0.05)
 x1 <- filter(new_data, fabric == "1")$TiO2
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq2_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -326,8 +307,7 @@ qq2_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "2")$TiO2
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq2_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -338,23 +318,19 @@ qq2_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "3")$TiO2
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq2_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
   ggtitle("F. 3")+
   theme(panel.background = element_blank(),
         axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"))
-
-
 # Fabric 4
 # ...
 grid.arrange(qq2_1,qq2_2,qq2_3,qq1_4,ncol = 2, top = "TiO2")
 
 # shapiro - test
-# H0: normal distribution
-# p-value > 0.05: H0 accepted
+# H0: normal distribution; p-value > 0.05: H0 accepted
 shapiro.test(filter(new_data, fabric == "1")$TiO2)
 shapiro.test(filter(new_data, fabric == "2")$TiO2)
 shapiro.test(filter(new_data, fabric == "3")$TiO2)
@@ -416,6 +392,7 @@ h3_4 <- filter(new_data, fabric == "4") %>%
   xlim(min(new_data$Al2O3)-7*mean(new_data$Al2O3/100),max(new_data$Al2O3)+7*mean(new_data$Al2O3/100))+
   theme(panel.background = element_rect(fill = "white",colour = "white"),
         axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"))
+
 grid.arrange(h3_1,h3_2,h3_3,h3_4,ncol = 2)
 
 ##############################################################################
@@ -426,8 +403,7 @@ p <- seq(0.05, 0.95, 0.05)
 x1 <- filter(new_data, fabric == "1")$Al2O3
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq3_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -438,8 +414,7 @@ qq3_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "2")$Al2O3
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq3_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -450,18 +425,8 @@ qq3_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "3")$Al2O3
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq3_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
-  geom_point()+
-  geom_abline()+
-  ggtitle("F. 3")+
-  theme(panel.background = element_blank(),
-        axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"))
-# Fabric 4
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
-qq2_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
   ggtitle("F. 3")+
@@ -535,6 +500,7 @@ h4_4 <- filter(new_data, fabric == "4") %>%
   xlim(min(new_data$Fe2O3TOT)-7*mean(new_data$Fe2O3TOT/100),max(new_data$Fe2O3TOT)+7*mean(new_data$Fe2O3TOT/100))+
   theme(panel.background = element_rect(fill = "white",colour = "white"),
         axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"))
+
 grid.arrange(h4_1,h4_2,h4_3,h4_4,ncol = 2)
 
 ##############################################################################
@@ -545,8 +511,7 @@ p <- seq(0.05, 0.95, 0.05)
 x1 <- filter(new_data, fabric == "1")$Fe2O3TOT
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq4_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -557,8 +522,7 @@ qq4_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "2")$Fe2O3TOT
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq4_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -569,8 +533,7 @@ qq4_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "3")$Fe2O3TOT
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq4_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -582,8 +545,7 @@ qq4_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 grid.arrange(qq4_1,qq4_2,qq4_3,qq1_4,ncol = 2, top = "TiO2")
 
 # shapiro - test
-# H0: normal distribution
-# p-value > 0.05: H0 accepted
+# H0: normal distribution; p-value > 0.05: H0 accepted
 shapiro.test(filter(new_data, fabric == "1")$Fe2O3TOT)
 shapiro.test(filter(new_data, fabric == "2")$Fe2O3TOT)
 shapiro.test(filter(new_data, fabric == "3")$Fe2O3TOT)
@@ -645,6 +607,7 @@ h5_4 <- filter(new_data, fabric == "4") %>%
   xlim(min(new_data$MnO)-0.1,max(new_data$MnO)+0.1)+
   theme(panel.background = element_rect(fill = "white",colour = "white"),
         axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"))
+
 grid.arrange(h5_1,h5_2,h5_3,h5_4,ncol = 2)
 
 ##############################################################################
@@ -655,8 +618,7 @@ p <- seq(0.05, 0.95, 0.05)
 x1 <- filter(new_data, fabric == "1")$MnO
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq5_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -667,8 +629,7 @@ qq5_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "2")$MnO
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq5_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -679,8 +640,7 @@ qq5_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "3")$MnO
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq5_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -692,8 +652,7 @@ qq5_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 grid.arrange(qq2_1,qq2_2,qq2_3,qq1_4,ncol = 2, top = "TiO2")
 
 # shapiro - test
-# H0: normal distribution
-# p-value > 0.05: H0 accepted
+# H0: normal distribution; p-value > 0.05: H0 accepted
 shapiro.test(filter(new_data, fabric == "1")$MnO)
 shapiro.test(filter(new_data, fabric == "2")$MnO)
 shapiro.test(filter(new_data, fabric == "3")$MnO)
@@ -755,6 +714,7 @@ h6_4 <- filter(new_data, fabric == "4") %>%
   xlim(min(new_data$MgO)-7*mean(new_data$MgO/100),max(new_data$MgO)+7*mean(new_data$MgO/100))+
   theme(panel.background = element_rect(fill = "white",colour = "white"),
         axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"))
+
 grid.arrange(h6_1,h6_2,h6_3,h6_4,ncol = 2)
 
 ##############################################################################
@@ -765,8 +725,7 @@ p <- seq(0.05, 0.95, 0.05)
 x1 <- filter(new_data, fabric == "1")$MgO
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq6_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -777,8 +736,7 @@ qq6_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "2")$MgO
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq6_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -789,8 +747,7 @@ qq6_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "3")$MgO
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq6_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -802,8 +759,7 @@ qq6_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 grid.arrange(qq6_1,qq6_2,qq6_3,qq1_4,ncol = 2, top = "TiO2")
 
 # shapiro - test
-# H0: normal distribution
-# p-value > 0.05: H0 accepted
+# H0: normal distribution; p-value > 0.05: H0 accepted
 shapiro.test(filter(new_data, fabric == "1")$MgO)
 shapiro.test(filter(new_data, fabric == "2")$MgO)
 shapiro.test(filter(new_data, fabric == "3")$MgO)
@@ -876,8 +832,7 @@ p <- seq(0.05, 0.95, 0.05)
 x1 <- filter(new_data, fabric == "1")$CaO
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq7_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -888,8 +843,7 @@ qq7_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "2")$CaO
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq7_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -900,8 +854,7 @@ qq7_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "3")$CaO
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq7_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -913,8 +866,7 @@ qq7_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 grid.arrange(qq7_1,qq7_2,qq7_3,qq1_4,ncol = 2, top = "TiO2")
 
 # shapiro - test
-# H0: normal distribution
-# p-value > 0.05: H0 accepted
+# H0: normal distribution; p-value > 0.05: H0 accepted
 shapiro.test(filter(new_data, fabric == "1")$CaO)
 shapiro.test(filter(new_data, fabric == "2")$CaO)
 shapiro.test(filter(new_data, fabric == "3")$CaO)
@@ -977,8 +929,7 @@ p <- seq(0.05, 0.95, 0.05)
 x1 <- filter(new_data, fabric == "1")$Na2O
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq8_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -989,8 +940,7 @@ qq8_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "2")$Na2O
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq8_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -1001,8 +951,7 @@ qq8_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "3")$Na2O
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq8_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -1014,8 +963,7 @@ qq8_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 grid.arrange(qq8_1,qq8_2,qq8_3,qq1_4,ncol = 2, top = "TiO2")
 
 # shapiro - test
-# H0: normal distribution
-# p-value > 0.05: H0 accepted
+# H0: normal distribution; p-value > 0.05: H0 accepted
 shapiro.test(filter(new_data, fabric == "1")$Na2O)
 shapiro.test(filter(new_data, fabric == "2")$Na2O)
 shapiro.test(filter(new_data, fabric == "3")$Na2O)
@@ -1077,6 +1025,7 @@ h9_4 <- filter(new_data, fabric == "4") %>%
   xlim(min(new_data$K2O)-7*mean(new_data$K2O/100),max(new_data$K2O)+7*mean(new_data$K2O/100))+
   theme(panel.background = element_rect(fill = "white",colour = "white"),
         axis.line = element_line(size = 0.2,linetype = 'solid',color = "black"))
+
 grid.arrange(h9_1,h9_2,h9_3,h9_4,ncol = 2)
 
 ##############################################################################
@@ -1087,8 +1036,7 @@ p <- seq(0.05, 0.95, 0.05)
 x1 <- filter(new_data, fabric == "1")$K2O
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq9_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -1099,8 +1047,7 @@ qq9_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "2")$K2O
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq9_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -1111,8 +1058,7 @@ qq9_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "3")$K2O
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq9_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -1124,8 +1070,7 @@ qq9_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 grid.arrange(qq9_1,qq9_2,qq9_3,qq1_4,ncol = 2, top = "TiO2")
 
 # shapiro - test
-# H0: normal distribution
-# p-value > 0.05: H0 accepted
+# H0: normal distribution; p-value > 0.05: H0 accepted
 shapiro.test(filter(new_data, fabric == "1")$K2O)
 shapiro.test(filter(new_data, fabric == "2")$K2O)
 shapiro.test(filter(new_data, fabric == "3")$K2O)
@@ -1197,8 +1142,7 @@ p <- seq(0.05, 0.95, 0.05)
 x1 <- filter(new_data, fabric == "1")$P2O5
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq10_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -1209,8 +1153,7 @@ qq10_1 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "2")$P2O5
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq10_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -1221,8 +1164,7 @@ qq10_2 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 x1 <- filter(new_data, fabric == "3")$P2O5
 observed_quantiles <- quantile(x1, p)
 theoretical_quantiles <- qnorm( p, mean = mean(x1), sd = sd(x1))
-qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles,
-                    "observed_quantiles" = observed_quantiles)
+qq_df <- data.frame("theoretical_quantiles"  = theoretical_quantiles, "observed_quantiles" = observed_quantiles)
 qq10_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+ 
   geom_point()+
   geom_abline()+
@@ -1234,8 +1176,7 @@ qq10_3 <- qq_df %>% ggplot(aes(x=theoretical_quantiles, y=observed_quantiles))+
 grid.arrange(qq10_1,qq10_2,qq10_3,qq1_4,ncol = 2, top = "TiO2")
 
 # shapiro - test
-# H0: normal distribution
-# p-value > 0.05: H0 accepted
+# H0: normal distribution; p-value > 0.05: H0 accepted
 shapiro.test(filter(new_data, fabric == "1")$P2O5)
 shapiro.test(filter(new_data, fabric == "2")$P2O5)
 shapiro.test(filter(new_data, fabric == "3")$P2O5)
