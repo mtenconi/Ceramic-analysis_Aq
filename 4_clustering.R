@@ -4,20 +4,17 @@ hc_data <- new_data[,5:34]
 hc_data <- hc_data[-c(11)]   
 
 # Visual approach: nr of square shaped blocks along the diagonal 
-# Hopkins' statistic: H > 0.75  == clustering tendency at the 90% confidence level
-# H value > 0.5 = the dataset is clusterable
+# Hopkins' statistic: H value > 0.5 = the dataset is clusterable
 gradient.color <- list(low = "red",  high = "yellow")
 set.seed(123)
 hc_data %>%
-  scale() %>%     # Scale variables
+  scale() %>%
   get_clust_tendency(n = 35, gradient = gradient.color)
 
 #########################################################################################
 # Determining the optimal number of clusters
 
 # Methods:
-# Direct methods: elbow and silhouette methods:   
-# Statistical testing methods (Comparing evidence against null hypothesis): gap statistic
 hc_data <- scale(hc_data)
 head(hc_data,2)
 dim(hc_data)
@@ -28,7 +25,8 @@ fviz_nbclust(hc_data, kmeans, method = "wss") +
   geom_vline(xintercept = 4, linetype = 2)+
   labs(subtitle = "Elbow method")
 
-# Silhouette method: the location of the max = appropriate number of clustersfviz_nbclust(hc_data, kmeans, method = "silhouette")+
+# Silhouette method: the location of the max = appropriate number of clusters
+fviz_nbclust(hc_data, kmeans, method = "silhouette")+
   labs(subtitle = "Silhouette method")
 
 # # Gap statistic
@@ -52,7 +50,7 @@ fviz_nbclust(res.nbclust, ggtheme = theme_minimal())
 set.seed(123)
 km.res <- kmeans(hc_data, 3, nstart = 30)   # k = 3
 
-# Visualize
+# Visualization
 fviz_cluster(km.res, data = hc_data,
              ellipse.type = "convex",
              palette = "jco",
@@ -63,7 +61,8 @@ fviz_cluster(km.res, data = hc_data,
 new_data$fabric[which(km.res$cluster == 1)]
 new_data$fabric[which(km.res$cluster == 2)]
 new_data$fabric[which(km.res$cluster == 3)]
-#######################################
+
+###########################################################################################
 # Examine several different values of k:
 kmean_calc <- function(df, ...){
   kmeans(df, scaled = ..., nstart = 30)
@@ -89,7 +88,6 @@ new_data$fabric[which(km4$cluster == 4)]
 ###########################################################################################
 ###########################################################################################
 # Hierarchical clustering
-# Compute hierarchical clustering
 hc_data <- new_data[,5:34]  
 hc_data <- hc_data[-c(11)]   
 rownames(hc_data) <- new_data$sample_id
@@ -171,4 +169,3 @@ fviz_dend(hc_centroid, k = 4,
           k_colors = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A"),
           color_labels_by_k = TRUE
 )
-
