@@ -11,7 +11,7 @@
 str(new_data)
 summary(new_data[5:34]) %>% kable() %>% kable_styling()
 
-# Average and standard:
+# Average and standard deviation:
 # Major elements:
 summary_major <- new_data %>% 
   summarize(avg_SiO2 = round(mean(SiO2),2), sd_SiO2 = round(sd(SiO2),2), 
