@@ -5,13 +5,13 @@ data <- data[,-c(11)]  # S exclusion from dataset
 data <- data.frame(sample_id = data_xrf$sample_id, fabric = new_data$fabric, data)
 rownames(data) <- new_data$sample_id
 
-# Perform pca, using the prcomp() function. The variable CustomerID is excluded
+# Perform pca
 pca <- prcomp(data[,3:31], center = TRUE, scale = FALSE)
 
 # Analysis of results:
 fviz_eig(pca, addlabels = TRUE, ylim = c(0, 50))
 round(get_eigenvalue(pca)[1:4,],2)
-# first 4 principal components explain 76% of the total variation in the dataset
+# first 4 principal components explain 67% of the total variation in the dataset
 
 # Contribution of variables to PC1 and PC2 (Dim1, Dim2)
 fviz_pca_var(pca, col.var="contrib",
@@ -30,7 +30,7 @@ head(var$contrib[,1:4], 4)
 
 #########################################################################
 #########################################################################
-# Plots of results: quality and contribution
+# Plots of results:
 
 # Biplot
 # Most important (or, contributing) variables highlighted
@@ -60,7 +60,6 @@ pca_df <- data.frame(pc1 = pca$x[,1], pc2 = pca$x[,2], pc3 = pca$x[,3],
                      fabric = data$fabric)
 
 # Scatter plot pf pc1 and pc2, grouped by fabric
-
 pca12 <- pca_df %>% 
   ggplot(aes(pc1, pc2,color = fabric, fill = fabric)) +
   geom_point(aes(color = fabric, fill = fabric), size = 3) +
@@ -100,4 +99,3 @@ pca23 <- pca_df %>%
 pca23
 
 grid.arrange(pca12, pca13, pca23, ncol = 1)
-
