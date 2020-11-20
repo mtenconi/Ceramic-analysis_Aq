@@ -1,10 +1,9 @@
-# scale transformation
+# scale transformation of data
 data<- new_data[5:34]
 log10_data <- scale(data)
 log10_data <- log10_data[,-c(11)]  # S exclusion from dataset
 log10_data <- data.frame(sample_id = data_xrf$sample_id, fabric = new_data$fabric, log10_data)
 rownames(log10_data) <- new_data$sample_id
-
 
 # log10 transformation
 
